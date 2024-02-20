@@ -60,12 +60,8 @@ app.delete("/delete/:_id", async (req, res) => {
 
 app.patch("/editusername/:_id", async (req, res) => {
   const user = req.session.user;
-
-  let newusername = await users.updateOne({ _id: user._id }, { username: req.body.username })
-
-  
+  let newusername = await users.updateOne({ _id: user._id }, { username: req.body.username })  
   let newpostusername = await posts.updateMany({userid : user._id}, {username : req.body.username})
   req.session.user.username = req.body.username; 
-
   res.redirect("/home");
 })

@@ -56,5 +56,10 @@ exports.postlogin = async (req, res) => {
   res.redirect("/home")
 }
 
+exports.logout = async (req, res) => {
+  req.session.user = undefined;
+  res.redirect("/login");
+}
+
 
   
