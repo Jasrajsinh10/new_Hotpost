@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const e = require('express');
 const posts = require('../models/postSchema');
 const session = require("express-session");
+const {validationResult} = require("express-validator")
 
 
 exports.getlogin = (req, res) => {
@@ -23,6 +24,11 @@ exports.postsignup = async (req, res) => {
     username: req.body.username,
     password: req.body.password,
     email: req.body.email
+  }
+  const error = validationResult(req);
+  console.log(error.array());
+  if (!error.isEmpty()) {
+    return res.redirect("/signup")
   }
   const checkuser = await users.findOne({ username: user.username });
   if (checkuser) {

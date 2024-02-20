@@ -2,7 +2,7 @@ const users = require('../models/userSchema');
 const bcrypt = require('bcryptjs');
 const e = require('express');
 const posts = require('../models/postSchema');
-const likes = require("../models/likesSchema");
+
 
 exports.getpostcreate = (req, res) => {
   const user = req.session.user;
