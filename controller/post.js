@@ -2,6 +2,7 @@ const users = require('../models/userSchema');
 const bcrypt = require('bcryptjs');
 const e = require('express');
 const posts = require('../models/postSchema');
+const likes = require("../models/likesSchema");
 
 exports.getpostcreate = (req, res) => {
   const user = req.session.user;
@@ -20,8 +21,8 @@ exports.gethome = async (req, res) => {
     res.redirect("/login");
   }
   else {
-    
-    res.render("home", { postall, user });
+    console.log
+    res.render("home", { postall, user});
   }
 }
 exports.postpostcreate = async (req, res) => {
@@ -53,5 +54,20 @@ exports.getMyposts = async (req, res) => {
   }
 }
 
-
+exports.postlike = async (req, res) => {
+  const user = req.session.user;
+  let post = await posts.findById(req.params._id);
+  
+  if (post.like.includes(user._id)) {
+    let newpostlike = post.like.pull(user._id);
+    let deletelike = await posts.updateOne({ _id: req.params._id }, { like: newpostlike })
+    res.redirect("/home")
+  }
+  else {
+    post.like.push(user._id);
+    let newpostlike = post.like;
+    let newpost = await posts.updateOne({ _id: req.params._id }, { like: newpostlike });
+    res.redirect("/home");
+  }
+  }
 

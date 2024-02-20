@@ -10,7 +10,7 @@ router.post("/postpostcreate", postController.postpostcreate);
 
 router.get("/Myposts", postController.getMyposts);
 
-
+router.post("/like/:_id", postController.postlike);
 
 
 module.exports = router;
